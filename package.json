@@ -4,12 +4,18 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "start": "node index.js",
+    "start-dev": "nodemon ndex.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Akshita",
   "license": "ISC",
   "dependencies": {
     "ejs": "^3.1.10",
-    "express": "^4.21.1"
+    "express": "^4.21.1",
+    "mongoose": "^8.8.3"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.7"
   }
 }
