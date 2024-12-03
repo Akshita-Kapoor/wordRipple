@@ -7,15 +7,15 @@ async function showUserSignInPage(req, res) {
   return res.render("signin");
 }
 async function handleUserSignIn(req, res) {
-    const {email, password} = req.body;
-
-    const user = User.matchPassword(email, password);
-    // if (!user) {
-    //     return res.render("login", {
-    //       error: "Incorrect email or password",
-    //     });
-    //   }
-  return res.redirect("/");
+    const { email, password } = req.body;
+ try {
+    const token = await User.matchPasswordAndGenerateToken(email, password);
+    return res.cookie('token', token).redirect('/');
+ } catch (error) {
+    return res.render('signin', {
+        error: "Incorrect email or password"
+    })
+ }
 }
 async function handleUserSignUp(req, res) {
   const { fullName, email, password } = req.body;
