@@ -26,9 +26,13 @@ async function handleUserSignUp(req, res) {
   });
   return res.redirect("/");
 }
+async function handleLogOut(req, res) {
+  return res.clearCookie('token').redirect('/');
+}
 module.exports = {
   showUserSignUpPage,
   showUserSignInPage,
   handleUserSignUp,
   handleUserSignIn,
+  handleLogOut
 };
