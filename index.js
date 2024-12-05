@@ -14,20 +14,26 @@ connectMongoDb("mongodb://localhost:27017/wordRipple");
 app.use(express.urlencoded({ extended: false })); // for form data
 app.use(cookieParser());
 app.use(checkForAuthenticationCookie('token'));
+app.use(express.static(path.resolve("./public")))
 
 // register Routes
 const userRoute = require("./routes/user");
+const addNewBlogRoute = require("./routes/blog");
+const Blog = require("./models/blog");
 
 // set view engine and its path
 app.set("view engine", "ejs");
 app.set("views", path.resolve("./views"));
 
 // routes
-app.get("/", (req, res) => {
+app.get("/", async (req, res) => {
+    const allBlogs = await Blog.find({})
     res.render("home", {
-        user: req.user
+        user: req.user,
+        blogs: allBlogs
     })
 })
 app.use("/user", userRoute);
+app.use("/blog", addNewBlogRoute);
 
 app.listen(PORT, () => console.log('Server started'));
